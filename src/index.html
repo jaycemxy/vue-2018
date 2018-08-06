@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在线简历编辑器</title>
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/resume.css">
+    <link rel="stylesheet" href="./css/editable-span.css">
+</head>
+
+<body>
+    <div class="page" id="app">
+        <aside>
+            <div class="upper">
+                <ul class="actions">
+                    <li>
+                        <button class="button">保存</button>
+                    </li>
+                    <li>
+                        <button class="button">打印</button>
+                    </li>
+                    <li>
+                        <button class="button">分享</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="down">
+                <button class="button">登出</button>
+            </div>
+        </aside>
+        <main>
+            <div class="resume">
+                <section class="profile">
+                    <h1>
+                      <editable-span v-bind:value="resume.name" v-on:edit="onEdit('name',$event)"></editable-span>
+                    </h1>
+                    <h1>联系方式</h1>
+                    <p class="profile">
+                        <editable-span :value="resume.weChat" @edit="onEdit('weChat',$event)"></editable-span>
+                        <editable-span :value="resume.phone" @edit="onEdit('phone',$event)"></editable-span>
+                        <editable-span :value="resume.email" @edit="onEdit('email',$event)"></editable-span>
+                        <editable-span :value="resume.github" @edit="onEdit('github',$event)"></editable-span>
+                    </p>
+                </section>
+                <section class="skills">
+                    <h2>技能</h2>
+                    <ul>
+                        <li>
+                            <span class="name">静态页面制作</span>
+                            <div class="description">完美实现设计稿</div>
+                        </li>
+                        <li>
+                            <span class="name">静态页面制作</span>
+                            <div class="description">完美实现设计稿</div>
+                        </li>
+                        <li>
+                            <span class="name">静态页面制作</span>
+                            <div class="description">完美实现设计稿</div>
+                        </li>
+                        <li>
+                            <span class="name">静态页面制作</span>
+                            <div class="description">完美实现设计稿</div>
+                        </li>
+                    </ul>
+                </section>
+                <section class="projects">
+                    <h2>项目经历</h2>
+                    <ol>
+                        <li>
+                            <header>
+                                <div class="start">
+                                    <h3 class="name">我的简历</h3>
+                                    <span class="link">预览链接</span>
+                                </div>
+                                <div class="end">
+                                    <span class="keywords">关键词</span>
+                                </div>
+                            </header>
+                            <p class="description">项目描述项目描述项目描述项目描述项目描述项目描述项目描述项目描述</p>
+                        </li>
+                        <li>
+                            <header>
+                                <div class="start">
+                                    <h3 class="name">我的简历</h3>
+                                    <span class="link">预览链接</span>
+                                </div>
+                                <div class="end">
+                                    <span class="keywords">关键词</span>
+                                </div>
+                            </header>
+                            <p class="description">项目描述</p>
+                        </li>
+                        <li>
+                            <header>
+                                <div class="start">
+                                    <h3 class="name">我的简历</h3>
+                                    <span class="link">预览链接</span>
+                                </div>
+                                <div class="end">
+                                    <span class="keywords">关键词</span>
+                                </div>
+                            </header>
+                            <p class="description">项目描述</p>
+                        </li>
+                        <li>
+                            <header>
+                                <div class="start">
+                                    <h3 class="name">我的简历</h3>
+                                    <span class="link">预览链接</span>
+                                </div>
+                                <div class="end">
+                                    <span class="keywords">关键词</span>
+                                </div>
+                            </header>
+                            <p class="description">项目描述</p>
+                        </li>
+                    </ol>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="../vendors/av-min.js"></script>
+    <script src="./js/av.js"></script>
+    <script src="../vendors/vue.min.js"></script>
+    <script src="./js/editable-span.js"></script>
+    <script src="./js/app.js"></script>
+</body>
+
+</html>
