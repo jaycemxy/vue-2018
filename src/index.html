@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/resume.css">
     <link rel="stylesheet" href="./css/editable-span.css">
+    <link rel="stylesheet" href="./css/login.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_779612_j7pskpwb16.css">
 </head>
 
 <body>
@@ -16,7 +18,7 @@
             <div class="upper">
                 <ul class="actions">
                     <li>
-                        <button class="button">保存</button>
+                        <button class="button" @click="onClickSave">保存</button>
                     </li>
                     <li>
                         <button class="button">打印</button>
@@ -34,7 +36,7 @@
             <div class="resume">
                 <section class="profile">
                     <h1>
-                      <editable-span v-bind:value="resume.name" v-on:edit="onEdit('name',$event)"></editable-span>
+                        <editable-span v-bind:value="resume.name" v-on:edit="onEdit('name',$event)"></editable-span>
                     </h1>
                     <h1>联系方式</h1>
                     <p class="profile">
@@ -120,7 +122,39 @@
                 </section>
             </div>
         </main>
+
+        <div v-show="loginVisible" class="login">
+            <div class="loginDiv">
+                <div class="header">
+                    <h2>账号登陆</h2>
+                    <button @click="loginVisible = false">关闭</button>
+                </div>
+                <form class="loginForm">
+                    <div class="email">
+                        <label>
+                            <div>
+                                <i class="iconfont icon-user"></i>
+                            </div>
+                        </label>
+                        <input placeholder="邮箱" type="text">
+                    </div>
+                    <div class="password">
+                        <label>
+                            <div>
+                                <i class="iconfont icon-password"></i>
+                            </div>
+                        </label>
+                        <input placeholder="密码" type="text">
+                    </div>
+                    <button type="button">登陆</button>
+                </form>
+                <a href="#" @click="signUpVisible = true">邮箱注册</a>
+            </div>
+        </div>
+
     </div>
+
+
     <script src="../vendors/av-min.js"></script>
     <script src="./js/av.js"></script>
     <script src="../vendors/vue.min.js"></script>
