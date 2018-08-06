@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="./css/editable-span.css">
     <link rel="stylesheet" href="./css/login.css">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_779612_j7pskpwb16.css">
+    <link rel="stylesheet" href="./css/signUp.css">
 </head>
 
 <body>
@@ -148,7 +149,35 @@
                     </div>
                     <button type="button">登陆</button>
                 </form>
-                <a href="#" @click="signUpVisible = true">邮箱注册</a>
+                <a href="#" @click="signUpVisible = true; loginVisible = false">邮箱注册</a>
+            </div>
+        </div>
+
+        <div v-show="signUpVisible" class="signUp">
+            <div class="signUpDiv">
+                <div class="header">
+                    <h2>邮箱注册</h2>
+                    <button @click="signUpVisible = false">关闭</button>
+                </div>
+                <form class="signUpForm">
+                    <div class="inputField">
+                        <label>邮箱</label>
+                        <input type="text" placeholder="请输入你的邮箱地址">
+                    </div>
+                    <div class="inputField">
+                        <label>设置密码</label>
+                        <input type="text" placeholder="密码">
+                    </div>
+                    <div class="inputField">
+                        <label>确认密码</label>
+                        <input type="text" placeholder="密码">
+                    </div>
+                </form>
+                <button class="signUpButton">注册</button>
+                <div class="footer">
+                    <label>已有账号 -> 返回</label>
+                    <a href="#" @click="signUpVisible = false; loginVisible = true">登陆</a>
+                </div>
             </div>
         </div>
 

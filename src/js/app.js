@@ -3,6 +3,7 @@ let app = new Vue({
     data: {
         editingName: false,
         loginVisible: false,
+        signUpVisible: false,
         resume: {
             name: 'yourName',
             weChat: 'weChatID',
