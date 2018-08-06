@@ -130,14 +130,14 @@
                     <h2>账号登陆</h2>
                     <button @click="loginVisible = false">关闭</button>
                 </div>
-                <form class="loginForm">
+                <form class="loginForm" @submit.prevent="onLogin">
                     <div class="email">
                         <label>
                             <div>
                                 <i class="iconfont icon-user"></i>
                             </div>
                         </label>
-                        <input placeholder="邮箱" type="text">
+                        <input placeholder="邮箱" type="text" v-model="login.email">
                     </div>
                     <div class="password">
                         <label>
@@ -145,11 +145,14 @@
                                 <i class="iconfont icon-password"></i>
                             </div>
                         </label>
-                        <input placeholder="密码" type="text">
+                        <input placeholder="密码" type="password" v-model="login.password">
                     </div>
-                    <button type="button">登陆</button>
+                    <button type="submit">登陆</button>
                 </form>
-                <a href="#" @click="signUpVisible = true; loginVisible = false">邮箱注册</a>
+                <div class="footer">
+                    <label>还没有账号？点击 -> </label>
+                    <a href="#" @click="signUpVisible = true; loginVisible = false">注册</a>
+                </div>
             </div>
         </div>
 
@@ -159,21 +162,17 @@
                     <h2>邮箱注册</h2>
                     <button @click="signUpVisible = false">关闭</button>
                 </div>
-                <form class="signUpForm">
+                <form class="signUpForm" @submit.prevent="onSignUp">
                     <div class="inputField">
                         <label>邮箱</label>
-                        <input type="text" placeholder="请输入你的邮箱地址">
+                        <input type="text" v-model="signUp.email" placeholder="请输入你的邮箱地址">
                     </div>
                     <div class="inputField">
                         <label>设置密码</label>
-                        <input type="text" placeholder="密码">
+                        <input type="password" v-model="signUp.password" placeholder="密码">
                     </div>
-                    <div class="inputField">
-                        <label>确认密码</label>
-                        <input type="text" placeholder="密码">
-                    </div>
+                    <button type="submit" class="signUpButton">注册</button>
                 </form>
-                <button class="signUpButton">注册</button>
                 <div class="footer">
                     <label>已有账号 -> 返回</label>
                     <a href="#" @click="signUpVisible = false; loginVisible = true">登陆</a>

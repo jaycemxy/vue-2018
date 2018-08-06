@@ -84,8 +84,13 @@
 .login .loginDiv .loginForm button:hover {
     background-color: rgb(18, 208, 161);
 }
-.login .loginDiv a {
-    margin-left: 300px;
-    color: #00c091;
+
+.login .loginDiv .footer {
+    margin-left: 200px;
+    margin-top: 10px;
     font-size: 1.2em;
+}
+.login .loginDiv a {
+    text-decoration: none;
+    color: #00c091;
 }

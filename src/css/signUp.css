@@ -15,8 +15,8 @@
     border-radius: 4px;
     background: #fff;
     font-size: 12px;
-    height: 400px;
-    margin-top: -207px;
+    height: 320px;
+    margin-top: -170px;
 }
 .signUp .signUpDiv .header {
     display: flex;
@@ -68,7 +68,7 @@
 }
 
 
-.signUpButton {
+.signUp .signUpDiv .signUpForm .signUpButton {
     width: 338px;
     height: 46px;
     line-height: 46px;
@@ -78,7 +78,6 @@
     font-size: 18px;
     color: #fff;
     cursor: pointer;
-    margin-left: 30px;
 }
 .signUp .signUpDiv .signUpButton:hover {
     background-color: rgb(18, 208, 161);
