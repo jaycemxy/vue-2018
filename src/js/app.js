@@ -24,6 +24,7 @@ let app = new Vue({
         onEdit(key, value) {
             this.resume[key] = value
         },
+        /* 注册 */
         onLogin(e){
             console.log(this.login)
              AV.User.logIn(this.login.email, this.login.password).then(function (user) {
@@ -36,6 +37,13 @@ let app = new Vue({
                 }
              })
         },
+        /* 登出 */
+        onLogout(e){
+            AV.User.logOut()
+            alert('注销成功')
+            window.location.reload()
+        },
+        /* 登录 */
         onSignUp(e){
             const user = new AV.User()
             user.setUsername(this.signUp.email)
@@ -45,6 +53,7 @@ let app = new Vue({
                 console.log(user)
             }, function (error) {})
         },
+        /* 点击保存按钮 */
         onClickSave(){
             let currentUser = AV.User.current()
             if(!currentUser){
@@ -53,6 +62,12 @@ let app = new Vue({
                 this.saveResume()
             }
         },
-        saveResume(){}
+        /* 保存用户数据到leanCloud */
+        saveResume(){
+            let {id} = AV.User.current()
+            let user = AV.Object.createWithoutData('User', id)
+            user.set('resume', this.resume)
+            user.save()
+        }
     }
 })
