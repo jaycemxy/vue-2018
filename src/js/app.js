@@ -4,6 +4,7 @@ let app = new Vue({
         editingName: false,
         loginVisible: false,
         signUpVisible: false,
+        shareVisible: false,
         currentUser: {
             objectId: undefined,
             email: ''
@@ -18,7 +19,6 @@ let app = new Vue({
                 {name: '请填写技能名称', description: '请填写技能描述'},
                 {name: '请填写技能名称', description: '请填写技能描述'},
                 {name: '请填写技能名称', description: '请填写技能描述'},
-                {name: '请填写技能名称', description: '请填写技能描述'},
             ],
             projects: [
                 {name:'项目名称', link:'预览链接', description: '项目描述'},
@@ -27,6 +27,7 @@ let app = new Vue({
         },
         login: { "email": '', "password": ''},
         signUp: { "email": '', "password": ''},
+        shareLink: '不知道',
     },
     methods: {
         /* 获取用户编辑内容 */
@@ -115,15 +116,18 @@ let app = new Vue({
                 // 异常处理
             });
         },
+        /* 增加技能 */
         addSkill(){
             this.resume.skills.push({
                 name: '请填写技能名称',
                 description: '请填写技能描述'
             })
         },
+        /* 移除技能 */
         removeSkill(index){
             this.resume.skills.splice(index, 1)
         },
+        /* 增加项目 */
         addProject(){
             this.resume.projects.push({
                 name: '项目名称',
@@ -131,6 +135,7 @@ let app = new Vue({
                 description: '项目描述'
             })
         },
+        /* 移除项目 */
         removeProject(index){
             this.resume.projects.splice(index, 1)
         },
@@ -140,5 +145,6 @@ let app = new Vue({
 let currentUser = AV.User.current()
 if(currentUser){
     app.currentUser = currentUser.toJSON()
+    app.shareLink = location.origin + location.pathname + '?user_id=' + app.currentUser.objectId
     app.getResume()
 }

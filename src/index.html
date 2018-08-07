@@ -11,10 +11,12 @@
     <link rel="stylesheet" href="./css/login.css">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_779612_j7pskpwb16.css">
     <link rel="stylesheet" href="./css/signUp.css">
+    <link rel="stylesheet" href="./css/share-link.css"
 </head>
 
 <body>
     <div class="page" id="app">
+        <!-- 左侧功能栏 -->
         <aside>
             <div class="upper">
                 <ul class="actions">
@@ -25,7 +27,7 @@
                         <button class="button">打印</button>
                     </li>
                     <li>
-                        <button class="button">分享</button>
+                        <button class="button" @click="shareVisible = true">分享</button>
                     </li>
                 </ul>
             </div>
@@ -33,8 +35,11 @@
                 <button class="button" @click="onLogout" v-show="hasLogin()">登出</button>
             </div>
         </aside>
+
+        <!-- 主要信息部分 -->
         <main>
             <div class="resume">
+                <!-- 个人信息模块 -->
                 <section class="profile">
                     <h1>个人信息</h1>
                     <p class="profile">
@@ -45,6 +50,8 @@
                         <editable-span :value="resume.github" @edit="onEdit('github',$event)"></editable-span>
                     </p>
                 </section>
+
+                <!-- 技能模块 -->
                 <section class="skills">
                     <h2>技能</h2>
                     <ul>
@@ -60,6 +67,8 @@
                         </li>
                     </ul>
                 </section>
+
+                <!-- 项目模块 -->
                 <section class="projects">
                     <h2>项目经历</h2>
                     <ol>
@@ -146,6 +155,13 @@
             </div>
         </div>
 
+        <!-- 点击分享页面 -->
+        <div v-show="shareVisible" class="share" v-cloak>
+            <div class="content">
+                <h2>复制下面链接分享给小伙伴吧～</h2>
+                <div class="link">{{ shareLink }}</div>
+            </div>
+        </div>
     </div>
 
 
