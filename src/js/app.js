@@ -13,20 +13,31 @@ let app = new Vue({
             weChat: 'weChatID',
             phone: '182xxxxxxxx',
             email: 'example@example.com',
-            github: ' https://github.com/'
+            github: ' https://github.com/',
+            skills: [
+                {name: '请填写技能名称', description: '请填写技能描述'},
+                {name: '请填写技能名称', description: '请填写技能描述'},
+                {name: '请填写技能名称', description: '请填写技能描述'},
+                {name: '请填写技能名称', description: '请填写技能描述'},
+            ]
         },
-        login: {
-            email: '',
-            password: ''
-        },
-        signUp: {
-            email: '',
-            password: ''
-        },
+        login: { "email": '', "password": ''},
+        signUp: { "email": '', "password": ''},
     },
     methods: {
+        /* 获取用户编辑内容 */
         onEdit(key, value) {
-            this.resume[key] = value
+            let regex = /\[(\d+)\]/g
+            key = key.replace(regex, (match, number)=> `.${number}`)
+            keys = key.split('.')
+            let result = this.resume
+            for(let i=0; i<keys.length; i++){
+                if(i === keys.length - 1){
+                    result[keys[i]] = value
+                }else{
+                    result = result[keys[i]]
+                }
+            }
         },
         /* 判断有没有获取到objectId来判断用户是否登录，从而显示或隐藏登出按钮 */
         hasLogin(){
@@ -95,10 +106,19 @@ let app = new Vue({
             var query = new AV.Query('User');
             query.get(this.currentUser.objectId).then((user)=> {
                 let resume = user.toJSON().resume
-                this.resume = resume
+                Object.assign(this.resume, resume)
             }, (error)=> {
                 // 异常处理
             });
+        },
+        addSkill(){
+            this.resume.skills.push({
+                name: '请填写技能名称',
+                description: '请填写技能描述'
+            })
+        },
+        removeSkill(index){
+            this.resume.skills.splice(index, 1)
         }
     }
 })
