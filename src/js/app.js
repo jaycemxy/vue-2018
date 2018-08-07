@@ -19,6 +19,10 @@ let app = new Vue({
                 {name: '请填写技能名称', description: '请填写技能描述'},
                 {name: '请填写技能名称', description: '请填写技能描述'},
                 {name: '请填写技能名称', description: '请填写技能描述'},
+            ],
+            projects: [
+                {name:'项目名称', link:'预览链接', description: '项目描述'},
+                {name:'项目名称', link:'预览链接', description: '项目描述'},
             ]
         },
         login: { "email": '', "password": ''},
@@ -119,7 +123,17 @@ let app = new Vue({
         },
         removeSkill(index){
             this.resume.skills.splice(index, 1)
-        }
+        },
+        addProject(){
+            this.resume.projects.push({
+                name: '项目名称',
+                link: '预览链接',
+                description: '项目描述'
+            })
+        },
+        removeProject(index){
+            this.resume.projects.splice(index, 1)
+        },
     }
 })
 
