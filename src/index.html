@@ -30,12 +30,13 @@
                 </ul>
             </div>
             <div class="down">
-                <button class="button" @click="onLogout">登出</button>
+                <button class="button" @click="onLogout" v-show="hasLogin()">登出</button>
             </div>
         </aside>
         <main>
             <div class="resume">
                 <section class="profile">
+                    {{ currentUser }}
                     <h1>
                         <editable-span v-bind:value="resume.name" v-on:edit="onEdit('name',$event)"></editable-span>
                     </h1>
@@ -128,7 +129,7 @@
             <div class="loginDiv">
                 <div class="header">
                     <h2>账号登陆</h2>
-                    <button @click="loginVisible = false">关闭</button>
+                    <button type="button" @click="loginVisible = false">关闭</button>
                 </div>
                 <form class="loginForm" @submit.prevent="onLogin">
                     <div class="email">
@@ -160,7 +161,7 @@
             <div class="signUpDiv">
                 <div class="header">
                     <h2>邮箱注册</h2>
-                    <button @click="signUpVisible = false">关闭</button>
+                    <button type="button" @click="signUpVisible = false">关闭</button>
                 </div>
                 <form class="signUpForm" @submit.prevent="onSignUp">
                     <div class="inputField">
