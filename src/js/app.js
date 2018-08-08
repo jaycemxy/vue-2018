@@ -116,29 +116,6 @@ let app = new Vue({
                 // 异常处理
             });
         },
-        /* 增加技能 */
-        addSkill(){
-            this.resume.skills.push({
-                name: '请填写技能名称',
-                description: '请填写技能描述'
-            })
-        },
-        /* 移除技能 */
-        removeSkill(index){
-            this.resume.skills.splice(index, 1)
-        },
-        /* 增加项目 */
-        addProject(){
-            this.resume.projects.push({
-                name: '项目名称',
-                link: '预览链接',
-                description: '项目描述'
-            })
-        },
-        /* 移除项目 */
-        removeProject(index){
-            this.resume.projects.splice(index, 1)
-        },
         /* 打印功能 */
         print(){
             window.print()
