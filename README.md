@@ -45,4 +45,9 @@ div[v-cloak]{
 ## 获取currentUser遇到问题
 问题描述：在登录过后想要拿到当前用户的ID和email时，发现我们无法获得currentUser的这些属性，这是因为vue在深入响应式原理中讲到它不能检测到对象属性的添加或删除，我们必须在data中声明currentUser的ID和email属性
 ![alt text](https://i.loli.net/2018/08/07/5b6921b512fa7.jpg)
+
+在Vue文档中的解释：
 ![alt text](https://i.loli.net/2018/08/07/5b69212d5a6fa.png)
+## 组件通信
+儿子向上发出事件通知爸爸，在该子组件中methods下的$emit前面需要加this，而在template中$emit前面不需要加this
+![alt text](https://i.loli.net/2018/08/08/5b6a8cde2d92b.jpg)

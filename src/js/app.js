@@ -5,6 +5,7 @@ let app = new Vue({
         loginVisible: false,
         signUpVisible: false,
         shareVisible: false,
+        shareLink: '',
         previewUser: {
             objectId: undefined,
         },
@@ -30,9 +31,6 @@ let app = new Vue({
                 {name:'项目名称', link:'预览链接', description: '项目描述'},
             ]
         },
-        login: { email: '', password: ''},
-        signUp: { email: '', password: ''},
-        shareLink: '不知道',
         mode: 'edit'  //  'preview'
     },
     /* 通过displayResume函数判断当前模式是编辑或预览，从而展示不同模式下的resume */
@@ -45,11 +43,25 @@ let app = new Vue({
     watch: {
         'currentUser.objectId': function (newValue, oldValue) {
             if (newValue) {
-                this.getResume(this.currentUser)
+                this.getResume(this.currentUser).then((resume)=> this.resume = resume)
             }
         }
     },
     methods: {
+        /* 用户登录后再展示分享链接 */
+        onShare(){
+            if(this.hasLogin()) {
+                this.shareVisible = true
+            }else{
+                alert('请先登录')
+            }
+        },
+        /* 登录 */
+        onLogin(user){
+            this.currentUser.objectId = user.objectId
+            this.currentUser.email = user.email
+            this.loginVisible = false
+        },
         /* 获取用户编辑内容 */
         onEdit(key, value) {
             let regex = /\[(\d+)\]/g
@@ -68,43 +80,11 @@ let app = new Vue({
         hasLogin(){
             return !!this.currentUser.objectId
         },
-        /* 登录 */
-        onLogin(e){
-            AV.User.logIn(this.login.email, this.login.password).then((user)=>{
-                user = user.toJSON()
-                this.currentUser.objectId = user.objectId
-                this.currentUser.email = user.email
-                this.loginVisible = false
-                window.location.reload()
-            }, (error)=>{
-                if(error.code === 211){
-                    alert('邮箱不存在')
-                }else if(error.code === 210){
-                    alert('用户名和密码不匹配')
-                }
-            })
-        },
         /* 登出 */
-        onLogout(e){
+        onLogout(e) {
             AV.User.logOut()
             alert('注销成功')
             window.location.reload()
-        },
-        /* 注册 */
-        onSignUp(e){
-            const user = new AV.User()
-            user.setUsername(this.signUp.email)
-            user.setPassword(this.signUp.password)
-            user.setEmail(this.signUp.email)
-            user.signUp().then((user) => {
-                alert('注册成功')
-                user = user.toJSON()
-                this.currentUser.objectId = user.objectId
-                this.currentUser.email = user.email
-                this.signUpVisible = false
-            }, (error)=> {
-                alert(error.rawMessage)
-            })
         },
         /* 点击保存按钮 */
         onClickSave(){
@@ -159,6 +139,7 @@ let app = new Vue({
         removeProject(index){
             this.resume.projects.splice(index, 1)
         },
+        /* 打印功能 */
         print(){
             window.print()
         }
