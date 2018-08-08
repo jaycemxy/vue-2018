@@ -5,12 +5,16 @@ let app = new Vue({
         loginVisible: false,
         signUpVisible: false,
         shareVisible: false,
+        previewUser: {
+            objectId: undefined,
+        },
+        previewResume: {},
         currentUser: {
             objectId: undefined,
             email: ''
         },
         resume: {
-            name: 'yourName',
+            name: '姓名',
             weChat: 'weChatID',
             phone: '182xxxxxxxx',
             email: 'example@example.com',
@@ -23,11 +27,27 @@ let app = new Vue({
             projects: [
                 {name:'项目名称', link:'预览链接', description: '项目描述'},
                 {name:'项目名称', link:'预览链接', description: '项目描述'},
+                {name:'项目名称', link:'预览链接', description: '项目描述'},
             ]
         },
-        login: { "email": '', "password": ''},
-        signUp: { "email": '', "password": ''},
+        login: { email: '', password: ''},
+        signUp: { email: '', password: ''},
         shareLink: '不知道',
+        mode: 'edit'  //  'preview'
+    },
+    /* 通过displayResume函数判断当前模式是编辑或预览，从而展示不同模式下的resume */
+    computed: {
+        displayResume(){
+            return this.mode === 'preview' ? this.previewResume : this.resume
+        }
+    },
+    /* 监听当前Id变化展示相应的resume */
+    watch: {
+        'currentUser.objectId': function (newValue, oldValue) {
+            if (newValue) {
+                this.getResume(this.currentUser)
+            }
+        }
     },
     methods: {
         /* 获取用户编辑内容 */
@@ -50,19 +70,19 @@ let app = new Vue({
         },
         /* 登录 */
         onLogin(e){
-            console.log(this.login)
-             AV.User.logIn(this.login.email, this.login.password).then((user)=>{
+            AV.User.logIn(this.login.email, this.login.password).then((user)=>{
                 user = user.toJSON()
                 this.currentUser.objectId = user.objectId
                 this.currentUser.email = user.email
-                this.loginVisible =false
-             }, (error)=>{
+                this.loginVisible = false
+                window.location.reload()
+            }, (error)=>{
                 if(error.code === 211){
                     alert('邮箱不存在')
                 }else if(error.code === 210){
                     alert('用户名和密码不匹配')
                 }
-             })
+            })
         },
         /* 登出 */
         onLogout(e){
@@ -107,11 +127,11 @@ let app = new Vue({
             })
         },
         /* 从leanCloud获取用户之前编辑过的数据到本地 */
-        getResume(){
+        getResume(user){
             var query = new AV.Query('User');
-            query.get(this.currentUser.objectId).then((user)=> {
+            return query.get(user.objectId).then((user)=> {
                 let resume = user.toJSON().resume
-                Object.assign(this.resume, resume)
+                return resume
             }, (error)=> {
                 // 异常处理
             });
@@ -142,9 +162,28 @@ let app = new Vue({
     }
 })
 
+
+// 获取当前用户
 let currentUser = AV.User.current()
-if(currentUser){
+if (currentUser) {
     app.currentUser = currentUser.toJSON()
     app.shareLink = location.origin + location.pathname + '?user_id=' + app.currentUser.objectId
-    app.getResume()
+    console.log('currentId: ' + app.currentUser.objectId)
+    app.getResume(app.currentUser).then(resume => {
+        app.resume = resume
+    })
+}
+
+// 获取预览用户Id
+let search = location.search
+let regex = /user_id=([^&]+)/
+let matches = search.match(regex)
+let userId
+if(matches){
+    userId = matches[1]
+    app.mode = 'preview'
+    console.log('previewId: ' + userId)
+    app.getResume({objectId: userId}).then(resume => {
+        app.previewResume = resume
+    })
 }
