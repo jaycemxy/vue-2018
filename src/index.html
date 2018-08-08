@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="//at.alicdn.com/t/font_779612_j7pskpwb16.css">
     <link rel="stylesheet" href="./css/signUp.css">
     <link rel="stylesheet" href="./css/share-link.css">
+    <link rel="stylesheet" href="./css/print.css" media="print">
 </head>
 
 <body>
@@ -24,7 +25,7 @@
                         <button class="button" @click="onClickSave">保存</button>
                     </li>
                     <li>
-                        <button class="button">打印</button>
+                        <button class="button" @click="print">打印</button>
                     </li>
                     <li>
                         <button class="button" @click="shareVisible = true">分享</button>
@@ -62,7 +63,7 @@
                             </div>
                             <span class="remove" @click="removeSkill(index)" v-if="index >= 2 && mode === 'edit'">x</span>
                         </li>
-                        <li v-if="mode === 'edit'">
+                        <li v-if="mode === 'edit'" class="add">
                             <span @click="addSkill">添加技能项</span>
                         </li>
                     </ul>
@@ -88,7 +89,7 @@
                                 <editable-span :disabled="mode === 'preview'" :value="project.description" @edit="onEdit(`projects[${index}].description`, $event)"></editable-span>
                             </p>
                         </li>
-                        <li v-if="mode === 'edit'">
+                        <li v-if="mode === 'edit'" class="add">
                             <span @click="addProject">添加项目</span>
                         </li>
                     </ol>

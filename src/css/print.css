@@ -1,0 +1,9 @@
+.page > aside {
+    display: none;
+}
+.resume .add {
+    display: none;
+}
+.resume .remove {
+    display: none;
+}
