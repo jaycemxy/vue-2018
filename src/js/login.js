@@ -1,13 +1,13 @@
 /* 账号登录页面 */
-Vue.component('login', {
+window.Login = {
     data() {
-        return {
-            login: {
-                email: '',
-                password: ''
-            },
-        }
-    },
+            return {
+                login: {
+                    email: '',
+                    password: ''
+                },
+            }
+        },
     methods: {
         /* 登录 */
         onLogin(e) {
@@ -23,7 +23,7 @@ Vue.component('login', {
                 }
             })
         },
-        onClickSignUp(){
+        onClickSignUp() {
             this.$emit('goToSignUp')
         },
     },
@@ -32,7 +32,7 @@ Vue.component('login', {
         <div class="loginDiv">
             <div class="header">
                 <h2>账号登陆</h2>
-                <button type="button" @click="$emit('close')">关闭</button>
+                <router-link to="/">关闭</router-link>
             </div>
             <form class="loginForm" @submit.prevent="onLogin">
                 <div class="email">
@@ -55,9 +55,12 @@ Vue.component('login', {
             </form>
             <div class="footer">
                 <label>还没有账号？点击 -> </label>
-                <a href="#" @click="onClickSignUp">注册</a>
+                <router-link to="/signUp">注册</router-link>
             </div>
         </div>
     </div>
     `
-})
+}
+
+/* 注册组件 */
+Vue.component('login', Login)

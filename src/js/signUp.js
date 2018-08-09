@@ -1,13 +1,13 @@
 /* 邮箱注册页面 */
-Vue.component('sign-up', {
+window.SignUp = {
     data() {
-        return {
-            signUp: {
-                email: '',
-                password: ''
-            },
-        }
-    },
+            return {
+                signUp: {
+                    email: '',
+                    password: ''
+                },
+            }
+        },
     methods: {
         /* 注册 */
         onSignUp(e) {
@@ -23,7 +23,7 @@ Vue.component('sign-up', {
                 alert(error.rawMessage)
             })
         },
-        onClickLogin(e){
+        onClickLogin(e) {
             this.$emit('goToLogin')
         },
     },
@@ -32,7 +32,7 @@ Vue.component('sign-up', {
         <div class="signUpDiv">
             <div class="header">
                 <h2>邮箱注册</h2>
-                <button type="button" @click="signUpVisible = false">关闭</button>
+                <router-link to="/">关闭</router-link>
             </div>
             <form class="signUpForm" @submit.prevent="onSignUp">
                 <div class="inputField">
@@ -47,9 +47,12 @@ Vue.component('sign-up', {
             </form>
             <div class="footer">
                 <label>已有账号 -> 返回</label>
-                <a href="#" @click="onClickLogin">登陆</a>
+                <router-link to="/login">登录</router-link>
             </div>
         </div>
     </div>
     `
-})
+}
+
+/* 注册组件 */
+Vue.component('sign-up', SignUp)

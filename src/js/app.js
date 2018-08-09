@@ -1,50 +1,46 @@
-let app = new Vue({
-    el: '#app',
-    data: {
-        editingName: false,
-        loginVisible: false,
-        signUpVisible: false,
-        shareVisible: false,
-        shareLink: '',
-        previewUser: {
-            objectId: undefined,
-        },
-        previewResume: {},
-        currentUser: {
-            objectId: undefined,
-            email: ''
-        },
-        resume: {
-            name: '姓名',
-            weChat: 'weChatID',
-            phone: '182xxxxxxxx',
-            email: 'example@example.com',
-            github: ' https://github.com/',
-            skills: [
-                {name: '请填写技能名称', description: '请填写技能描述'},
-                {name: '请填写技能名称', description: '请填写技能描述'},
-                {name: '请填写技能名称', description: '请填写技能描述'},
-            ],
-            projects: [
-                {name:'项目名称', link:'预览链接', description: '项目描述'},
-                {name:'项目名称', link:'预览链接', description: '项目描述'},
-                {name:'项目名称', link:'预览链接', description: '项目描述'},
-            ]
-        },
-        mode: 'edit'  //  'preview'
-    },
-    /* 通过displayResume函数判断当前模式是编辑或预览，从而展示不同模式下的resume */
-    computed: {
-        displayResume(){
-            return this.mode === 'preview' ? this.previewResume : this.resume
-        }
-    },
-    /* 监听当前Id变化展示相应的resume */
-    watch: {
-        'currentUser.objectId': function (newValue, oldValue) {
-            if (newValue) {
-                this.getResume(this.currentUser).then((resume)=> this.resume = resume)
-            }
+window.App = {
+    template: `
+    <div>
+        <app-aside v-show="mode === 'edit'" :logout-visible="true" @logout="onLogout" @save="onClickSave"></app-aside>
+        <main>
+            <resume :mode="mode" :display-resume="displayResume"></resume>
+        </main>
+        <button class="exitPreview" @click="mode = 'edit'" v-if="mode === 'preview'">退出预览</button>
+    </div>
+    `,
+    data() {
+        return {
+            editingName: false,
+            loginVisible: false,
+            signUpVisible: false,
+            shareVisible: false,
+            shareLink: '',
+            previewUser: {
+                objectId: undefined,
+            },
+            previewResume: {},
+            currentUser: {
+                objectId: undefined,
+                email: ''
+            },
+            resume: {
+                name: '姓名',
+                weChat: 'weChatID',
+                phone: '182xxxxxxxx',
+                email: 'example@example.com',
+                github: ' https://github.com/',
+                skills: [
+                    {name: '请填写技能名称', description: '请填写技能描述'},
+                    {name: '请填写技能名称', description: '请填写技能描述'},
+                    {name: '请填写技能名称', description: '请填写技能描述'},
+                ],
+                projects: [
+                    {name:'项目名称', link:'预览链接', description: '项目描述'},
+                    {name:'项目名称', link:'预览链接', description: '项目描述'},
+                    {name:'项目名称', link:'预览链接', description: '项目描述'},
+                ]
+            },
+            mode: 'edit'  //  'preview'
         }
     },
     methods: {
@@ -90,7 +86,7 @@ let app = new Vue({
         onClickSave(){
             let currentUser = AV.User.current()
             if(!currentUser){
-                this.loginVisible = true
+                this.$router.push('/login')
             }else{
                 this.saveResume()
             }
@@ -120,31 +116,14 @@ let app = new Vue({
         print(){
             window.print()
         }
-    }
-})
-
-
-// 获取当前用户
-let currentUser = AV.User.current()
-if (currentUser) {
-    app.currentUser = currentUser.toJSON()
-    app.shareLink = location.origin + location.pathname + '?user_id=' + app.currentUser.objectId
-    console.log('currentId: ' + app.currentUser.objectId)
-    app.getResume(app.currentUser).then(resume => {
-        app.resume = resume
-    })
+    },
+    /* 通过displayResume函数判断当前模式是编辑或预览，从而展示不同模式下的resume */
+    computed: {
+        displayResume(){
+            return this.mode === 'preview' ? this.previewResume : this.resume
+        }
+    },
 }
 
-// 获取预览用户Id
-let search = location.search
-let regex = /user_id=([^&]+)/
-let matches = search.match(regex)
-let userId
-if(matches){
-    userId = matches[1]
-    app.mode = 'preview'
-    console.log('previewId: ' + userId)
-    app.getResume({objectId: userId}).then(resume => {
-        app.previewResume = resume
-    })
-}
+/* 注册组件 */
+Vue.component = ('app', App)

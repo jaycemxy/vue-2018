@@ -16,27 +16,21 @@
 </head>
 
 <body>
-    <div class="page" id="app">
-        <!-- 左侧功能栏组件 -->
-        <app-aside v-show="mode === 'edit'" :logout-visible="true" @logout="onLogout" @save="onClickSave"></app-aside>
-
-        <!-- 主要信息组件 -->
-        <main>
-            <resume :mode="mode" :display-resume="displayResume"></resume>
-        </main>
+    <div class="page" id="root">
+        <router-view></router-view>
 
         <!-- 注册登录及分享组件 -->
-        <login v-show="loginVisible" @close="loginVisible = false" @login="onLogin"></login>
+        <!-- <login v-show="loginVisible" @close="loginVisible = false" @login="onLogin"></login>
         <sign-up v-show="signUpVisible"></sign-up>
-        <share :share-link="shareLink" v-show="shareVisible"></share>
+        <share :share-link="shareLink" v-show="shareVisible"></share> -->
 
-        <button class="exitPreview" @click="mode = 'edit'" v-if="mode === 'preview'">退出预览</button>
     </div>
 
 
     <script src="../vendors/av-min.js"></script>
     <script src="./js/av.js"></script>
     <script src="../vendors/vue.min.js"></script>
+    <script src="../vendors/vue-router.min.js"></script>
 
     <!-- 各功能组件 -->
     <script src="./js/editable-span.js"></script>
@@ -47,6 +41,7 @@
     <script src="./js/app-aside.js"></script>
     <!-- Vue根实例 -->
     <script src="./js/app.js"></script>
+    <script src="./js/root.js"></script>
 </body>
 
 </html>
