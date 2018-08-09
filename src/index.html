@@ -18,7 +18,7 @@
 <body>
     <div class="page" id="app">
         <!-- 左侧功能栏组件 -->
-        <app-aside v-show="mode === 'edit'"></app-aside>
+        <app-aside v-show="mode === 'edit'" :logout-visible="true" @logout="onLogout" @save="onClickSave"></app-aside>
 
         <!-- 主要信息组件 -->
         <main>
