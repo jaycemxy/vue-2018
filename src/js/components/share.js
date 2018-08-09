@@ -1,5 +1,5 @@
 /* 点击分享页面 */
-window.Share = {
+Vue.component('share', {
     props: ['shareLink'],
     template: `
     <div class="share" v-cloak>
@@ -9,6 +9,4 @@ window.Share = {
         </div>
     </div>
     `
-}
-
-Vue.component('share', Share)
+})

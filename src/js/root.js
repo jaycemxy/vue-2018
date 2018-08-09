@@ -2,7 +2,6 @@ const routes = [
     {path: '/', component: window.App},
     {path: '/login', component: window.Login},
     {path: '/signUp', component: window.SignUp},
-    {path: '/share', component: window.share},
 ]
 
 const router = new VueRouter({

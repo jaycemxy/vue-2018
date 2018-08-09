@@ -1,4 +1,5 @@
 window.App = {
+    props: ['currentUser', 'signUp'],
     template: `
     <div>
         <app-aside v-show="mode === 'edit'" :logout-visible="true" @logout="onLogout" @save="onClickSave"></app-aside>
